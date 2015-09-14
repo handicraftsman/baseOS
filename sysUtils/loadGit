@@ -1,3 +1,5 @@
+--TYPE: SYSSOFT
+
 local tArgs, gUser, gRepo, gPath, gBranch = {...}, nil, nil, "", "master"
 local usage = [[
  github <user> <repo> [path] [remote path] [branch]
