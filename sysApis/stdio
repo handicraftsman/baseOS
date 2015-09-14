@@ -1,0 +1,48 @@
+--TYPE: API
+
+local OSdebug = base.OS_GET_DEBUG()
+if OSdebug == true then
+  print("Loading /sysApis/stdio as API")
+end
+
+local ioeventType = nil 
+local ioeventKey = nil --Pressed key
+local ioeventClickX = nil --Cursor click X
+local ioeventClickY = nil --Cursor click Y
+local ioeventButton = nil
+
+function waitForKey()
+  ioeventType, ioeventKey = os.pullEvent("key")
+  return nil
+end
+
+function waitForClick()
+  ioeventType, ioeventButton, ioeventClickX, ioeventClickY = os.pullEvent("mouse_click")
+  return nil
+end
+
+function ioReturn(toReturn)
+  if toReturn == "Type" then
+    return ioeventType
+  end
+  if toReturn == "Key" then
+    return ioeventKey
+  end
+  if toReturn == "ClickX" then
+    return ioeventClickX
+  end
+  if toReturn == "ClickY" then
+    return ioeventClickY
+  end
+  if toReturn == "Button" then
+    return ioeventButton
+  end
+end
+
+function ioClear()
+  local ioeventType = nil
+  local ioeventKey = nil
+  local ioeventClickX = nil
+  local ioeventClickY = nil
+  local ioeventButton = nil
+end

@@ -1,0 +1,45 @@
+--TYPE: API
+
+local OSdebug = base.OS_GET_DEBUG()
+if OSdebug == true then
+  print("Loading /sysApis/colorApi as API")
+end
+
+function returnColor(color)
+  if color == "white" then
+    out = colors.white
+  elseif color == "orange" then
+    out = colors.orange
+  elseif color == "magenta" then
+    out = colors.magenta
+  elseif color == "lightBlue" then
+    out = colors.lightBlue
+  elseif color == "yellow" then
+    out = colors.yellow
+  elseif color == "lime" then
+    out = colors.lime
+  elseif color == "pink" then
+    out = colors.pink
+  elseif color == "gray" then
+    out = colors.gray
+  elseif color == "lightGray" then
+    out = colors.lightGray
+  elseif color == "cyan" then
+    out = colors.cyan
+  elseif color == "purple" then
+    out = colors.purple
+  elseif color == "blue" then
+    out = colors.blue
+  elseif color == "brown" then
+    out = colors.brown
+  elseif color == "green" then
+    out = colors.green
+  elseif color == "red" then
+    out = colors.red
+  elseif color == "black" then
+    out = colors.black
+  else
+    out = 0
+  end
+  return out
+end

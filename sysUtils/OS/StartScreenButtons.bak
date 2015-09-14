@@ -1,0 +1,126 @@
+--TYPE: SYSTEMGUI
+local debug = base.OS_GET_DEBUG()
+
+--Draw buttons
+--"shell" button
+paintutils.drawLine(1, 19, 5, 19, colors.green)
+term.setCursorPos(1, 19)
+term.setTextColor(colors.white)
+term.write("shell")
+
+--"shutdown" button
+paintutils.drawPixel(51, 1, colors.red)
+term.setCursorPos(51, 1)
+term.setTextColor(colors.white)
+term.write("S")
+
+--"reboot" button
+paintutils.drawPixel(50, 1, colors.green)
+term.setCursorPos(50, 1)
+term.setTextColor(colors.white)
+term.write("R")
+
+--"edit" button
+paintutils.drawLine(7, 19, 11, 19, colors.green)
+term.setCursorPos(7, 19)
+term.setTextColor(colors.white)
+term.write("edit")
+
+--"list" button
+paintutils.drawLine(13, 19, 16, 19, colors.green)
+term.setCursorPos(13, 19)
+term.setTextColor(colors.white)
+term.write("list")
+
+
+--Debug buttons
+if debug == true then
+--"dev" button
+paintutils.drawPixel(51, 2, colors.orange)
+term.setCursorPos(51, 2)
+term.setTextColor(colors.black)
+term.write("D")
+
+end
+
+--Reset term settings
+term.setCursorPos(1,1)
+term.setTextColor(colors.white)
+term.setBackgroundColor(colors.black)
+
+--Wait for click
+stdio.waitForClick()
+local ClickX = stdio.ioReturn("ClickX")
+local ClickY = stdio.ioReturn("ClickY")
+
+
+--Run button code
+local function SS_BUTTONS()
+  if ((ClickX >= 1 and ClickX <= 5) and (ClickY == 19)) then
+    --"shell" button
+    winUtils.clearAll()
+    term.setTextColor(colors.cyan)
+    print("Run /OS if you want to return to the GUI")
+    shell.run("cd /home")
+    print("Files in home dir:")
+    shell.run("ls /home")
+    term.setTextColor(colors.white)
+    elseif ((ClickX == 51) and (ClickY == 1)) then
+    --"shutdown" button
+    winUtils.updateWinPart("TopPanel", colors.red, "Goodbye", colors.white)
+    sleep(1)
+    os.shutdown()  
+  elseif ((ClickX == 50) and (ClickY == 1)) then
+    --"reboot" button
+    winUtils.updateWinPart("TopPanel", colors.green, "Goodbye", colors.white)
+    sleep(1)
+    os.reboot()
+  elseif ((ClickX >= 7) and (ClickX <= 11) and (ClickY == 19)) then
+    --"edit" button
+    winUtils.updateWinPart("BottomPanel", colors.blue, "(q = cancel): ", colors.white)
+    term.setBackgroundColor(colors.blue)
+    local filename = read()
+    term.setBackgroundColor(colors.black)
+    winUtils.clearAll()
+    if filename == "q" then
+      shell.run("/sysUtils/OS/StartScreen")
+    else
+      shell.run("edit "..filename)
+      shell.run("/sysUtils/OS/StartScreen")
+    end 
+  elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == 19)) then
+    --"list" button
+    winUtils.updateWinPart("BottomPanel", colors.blue, "(q = cancel, empty = /home): ", colors.white)
+    term.setBackgroundColor(colors.blue)
+    local dirname = read()
+    term.setBackgroundColor(colors.black)
+    winUtils.clearAll()
+    if dirname == "q" then
+      shell.run("/sysUtils/OS/StartScreen")
+    elseif dirname == "" then
+      shell.run("ls /home")
+      print("Press any key to continue")
+      stdio.waitForKey()
+      shell.run("/sysUtils/OS/StartScreen")
+    else
+      shell.run("ls "..dirname)
+      print("Press any key to continue")
+      stdio.waitForKey()
+      shell.run("/sysUtils/OS/StartScreen")
+    end
+  else
+    winUtils.clearAll()
+    shell.run("/sysUtils/OS/StartScreen")
+  end
+end
+
+--Debug buttons
+if debug == true then
+  if ((ClickX == 51) and (ClickY == 2)) then
+    winUtils.clearAll()
+    shell.run("edit /help")
+    shell.run("/sysUtils/OS/StartScreen")
+  end
+end
+
+SS_BUTTONS()

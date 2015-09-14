@@ -1,0 +1,24 @@
+--TYPE: BOOTSCRIPT
+local color_status = term.isColor()
+if color_status == false then
+  error("You must use ADVANCED PC to start this OS")
+end
+
+os.loadAPI("/sysApis/base")
+local OSdebug = base.OS_GET_DEBUG()
+
+print("init: Initializing APIS")
+os.loadAPI("/sysApis/loadApis")
+
+if OSdebug == true then
+  print("Press any key to continue")
+  os.pullEvent("key")
+end
+
+print("init: Booting OS (if any)")
+sleep(1)
+if fs.exists("/sysUtils/OS/OS") then
+  shell.run("/sysUtils/OS/OS")
+else
+  error("No OS found. Check /sysUtils/OS/OS")
+end
