@@ -38,6 +38,12 @@ term.setCursorPos(18, 19)
 term.setTextColor(colors.white)
 term.write("paint")
 
+--"fm" button
+paintutils.drawLine(24, 19, 25, 19, colors.green)
+term.setCursorPos(24, 19)
+term.setTextColor(colors.white)
+term.write("FM")
+
 --Debug buttons
 if debug == true then
 --"dev" button
@@ -155,6 +161,9 @@ local ClickY = stdio.ioReturn("ClickY")
       winUtils.clearAll()
       shell.run("paint "..filename)
     end
+  elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == 19)) then
+    --"fm" button
+    shell.run("/sysUtils/FM")
   end
 
 
