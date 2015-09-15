@@ -1,3 +1,5 @@
+--TYPE: SYSSOFT
+
 --[[
 		Mouse File Browser
 		by:
@@ -13,7 +15,7 @@ local ver = "1.4"
 local sTitle = "File Browser"
 local bugTest, norun, dir, showAll
 local _tArgs = {}
-local config = "mouse.cfg"
+local config = "/sysConfig/mouse.cfg"
 
 local temp
 if shell and shell.getRunningProgram then
@@ -29,8 +31,8 @@ temp = nil -- just because not needed
 local configSet = {}
 local cnf = {}
 
-if fs.exists(localPath.."/"..config) then
-	local file = fs.open(localPath.."/"..config,"r")
+if fs.exists(config) then
+	local file = fs.open(config,"r")
 	if file then
 		local item = file.readLine()
 		while item do
@@ -75,9 +77,9 @@ local customLaunch = configSet[10] or {
 }
 
 local function saveCFG(overWrite)
-	if not fs.exists(localPath.."/"..config) or overWrite then
+	if not fs.exists(config) or overWrite then
 		local cnf = {}
-		local file = fs.open(localPath.."/"..config,"w")
+		local file = fs.open(config,"w")
 		if file then
 			file.write(textutils.serialize(titleBar).."\n")
 			file.write(textutils.serialize(addressBar).."\n")
