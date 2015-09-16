@@ -1,0 +1,13 @@
+local tArgs ={ ... }
+
+local pa = shell.resolve(tArgs[1])
+if fs.exists("/sysUtils/mans/"..pa) then
+    local wr = fs.open("/sysUtils/mans/"..pa,"r")
+    term.clear()
+    term.setCursorPos(1,1)
+    textutils.pagedPrint(wr.readAll())
+ else
+  print("No manual for \""..pa.."\"")
+ end
+
+

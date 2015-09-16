@@ -18,6 +18,7 @@ end
 print("init: Booting OS (if any)")
 sleep(1)
 if fs.exists("/sysUtils/OS/OS") then
+  shell.setAlias("man","/sysUtils/man")
   shell.run("/sysUtils/OS/OS")
 else
   error("No OS found. Check /sysUtils/OS/OS")
