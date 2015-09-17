@@ -1,5 +1,6 @@
 --TYPE: SYSTEMGUI
 local debug = base.OS_GET_DEBUG()
+multishell.setTitle(multishell.getCurrent() , "Main") 
 
 function redraw1pxUp()
 paintutils.drawLine(1,18,52,18,colors.cyan)
