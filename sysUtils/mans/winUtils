@@ -1,0 +1,18 @@
+
+winUtils.createWin(windowColor, topPanelColor, topText, topTextColor, bottomPanelColor, bottomText, bottomTextColor): creates configured via arguments window. Sets local var "created" to 1.
+
+winUtils.prepareWin(): creates blank window. Sets local var "created" to 1. Use before winUtils.updateWinPart()
+
+    Possible window parts: "TopPanel", "Window", "BottomPanel".
+
+winUtils.writeWinPart(part, text, textColor, x, y): writes some text at X, Y of choosen part.
+
+winUtils.printWin(text, textColor): prints colored text to the "Window" via lua print().
+
+winUtils.setCurPos(x, y): sets cursor pos at "Window" part.
+
+winUtils.clearAll(): removes window. Sets local var "created" to 0.
+
+winUtils.updateWinPart(part, color, text, textColor): updates window part.
+
+winUtils.winNil(): sets local variable "created" to 0. 
