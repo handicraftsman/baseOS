@@ -1,6 +1,8 @@
 
 winUtils.createWin(windowColor, topPanelColor, topText, topTextColor, bottomPanelColor, bottomText, bottomTextColor): creates configured via arguments window. Sets local var "created" to 1.
 
+winUtils.getScrSize(): Updates screen size in API. Used to support screen size changing.
+
 winUtils.prepareWin(): creates blank window. Sets local var "created" to 1. Use before winUtils.updateWinPart()
 
     Possible window parts: "TopPanel", "Window", "BottomPanel".
