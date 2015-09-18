@@ -1,5 +1,6 @@
 --TYPE: SYSTEMGUI
 local debug = base.OS_GET_DEBUG()
+multishell.setTitle(multishell.getCurrent(), base.OS_GET_NAME())
 
 winUtils.getScrSize()
 local maxX, maxY
@@ -84,7 +85,7 @@ term.write("IDE>")
 paintutils.drawLine(6, 2, 9, 2, colors.lightGray)
 term.setCursorPos(6, 2)
 term.setTextColor(colors.blue)
-term.write("GIT>")
+term.write("????") --GIT>
 
 end
 
@@ -102,14 +103,7 @@ local ClickY = stdio.ioReturn("ClickY")
 --Run button code
   if ((ClickX >= 1 and ClickX <= 5) and (ClickY == maxY)) then
     --"shell" button
-    winUtils.clearAll()
-    term.setTextColor(colors.cyan)
-    print("Run [exit] if you want to return to the GUI")
-    shell.run("cd /home")
-    print("Files in home dir:")
-    shell.run("ls /home")
-    term.setTextColor(colors.white)
-    shell.run("shell")
+    shell.switchTab(shell.openTab("shell"))
     winUtils.getScrSize()
   elseif ((ClickX == maxX) and (ClickY == 1)) then
     --"shutdown" button
@@ -131,10 +125,9 @@ local ClickY = stdio.ioReturn("ClickY")
     term.setBackgroundColor(colors.black)
     winUtils.clearAll()
     if filename == "q" then
-      shell.run("/sysUtils/OS/StartScreen")
+      sleep(0)
     else
-      shell.run("edit "..filename)
-      shell.run("/sysUtils/OS/StartScreen")
+      shell.switchTab(shell.openTab("edit "..filename))
     end 
     winUtils.getScrSize()
   elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == maxY)) then
@@ -145,17 +138,11 @@ local ClickY = stdio.ioReturn("ClickY")
     term.setBackgroundColor(colors.black)
     winUtils.clearAll()
     if dirname == "q" then
-      shell.run("/sysUtils/OS/StartScreen")
+      sleep(0)
     elseif dirname == "" then
-      shell.run("ls /home")
-      print("Press any key to continue")
-      stdio.waitForKey()
-      shell.run("/sysUtils/OS/StartScreen")
+      shell.switchTab(shell.openTab("ls /home"))
     else
-      shell.run("ls "..dirname)
-      print("Press any key to continue")
-      stdio.waitForKey()
-      shell.run("/sysUtils/OS/StartScreen")
+      shell.switchTab(shell.openTab("ls "..dirname))
     end
     winUtils.getScrSize()
   elseif ((ClickX >= 18) and (ClickX <= 22) and (ClickY == maxY)) then
@@ -168,12 +155,12 @@ local ClickY = stdio.ioReturn("ClickY")
       sleep(0)
     else
       winUtils.clearAll()
-      shell.run("paint "..filename)
+      shell.switchTab(shell.openTab("paint "..filename))
     end
     winUtils.getScrSize()
   elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == maxY)) then
     --"fm" button
-    shell.run("/sysUtils/FM")
+    shell.switchTab(shell.openTab("/sysUtils/FM"))
     winUtils.getScrSize()
   end
 
@@ -184,8 +171,7 @@ if debug == true then
   if ((ClickX == maxX) and (ClickY == 2)) then
     --"dev" button
     winUtils.clearAll()
-    shell.run("edit /help")
-    shell.run("/sysUtils/OS/StartScreen")
+    shell.switchTab(shell.openTab("edit /help"))
     winUtils.getScrSize()
   elseif ((ClickX == maxX-1) and (ClickY == 2)) then
     --"redraw" button
@@ -193,7 +179,7 @@ if debug == true then
     winUtils.getScrSize()
   elseif ((ClickX >= 1) and (ClickX <= 4) and (ClickY == 2)) then
     --"ide" button
-    shell.run("/sysUtils/luaide")
+    shell.switchTab(shell.openTab("/sysUtils/luaide"))
     winUtils.getScrSize()
   elseif ((ClickX >= maxX-6) and (ClickX <= maxX-3) and (ClickY == 1)) then
     --"run" button
@@ -206,31 +192,31 @@ if debug == true then
     else
       term.setBackgroundColor(colors.black)
       term.clear()
-      shell.run(filename)
+      shell.switchTab(shell.openTab(filename))
       print("Press any key to continue")
       os.pullEvent("key")
     end
     winUtils.getScrSize()
   elseif ((ClickX >= maxX-6) and (ClickX <= maxX-3) and (ClickY == 2)) then
     winUtils.clearAll()
-    shell.run("lua")
+    shell.switchTab(shell.openTab("lua"))
     winUtils.getScrSize()
-  elseif ((ClickX >= 6) and (ClickX <= 9) and (ClickY == 2)) then
-    --"git" button
-    winUtils.updateWinPart("TopPanel", colors.lightGray, "(args; q = cancel): ", colors.blue)
-    term.setBackgroundColor(colors.lightGray)
-    local args = read()
-    term.setBackgroundColor(colors.black)
-    if args == "q" then
-      sleep(0)
-    else
-      term.setBackgroundColor(colors.black)
-      term.clear()
-      term.setTextColor(colors.white)
-      shell.run("/sysUtils/loadGit "..args)
-      print("Press any key to continue")
-      os.pullEvent("key")
-    end
+--  elseif ((ClickX >= 6) and (ClickX <= 9) and (ClickY == 2)) then
+--    --"git" button
+--    winUtils.updateWinPart("TopPanel", colors.lightGray, "(args; q = cancel): ", colors.blue)
+--    term.setBackgroundColor(colors.lightGray)
+--    local args = read()
+--    term.setBackgroundColor(colors.black)
+--    if args == "q" then
+--      sleep(0)
+--    else
+--      term.setBackgroundColor(colors.black)
+--      term.clear()
+--      term.setTextColor(colors.white)
+--      shell.switchTab(shell.openTab("/sysUtils/loadGit "..args))
+--      print("Press any key to continue")
+--      os.pullEvent("key") 
+--    end
     winUtils.getScrSize()
   end
 end
