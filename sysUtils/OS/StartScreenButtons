@@ -1,152 +1,76 @@
 --TYPE: SYSTEMGUI
 local debug = base.OS_GET_DEBUG()
-multishell.setTitle(multishell.getCurrent() , "Main") 
 
-function redraw1pxUp()
-paintutils.drawLine(1,18,52,18,colors.cyan)
---"shell" button
-paintutils.drawLine(1, 18, 5, 18, colors.green)
-term.setCursorPos(1, 18)
-term.setTextColor(colors.white)
-term.write("shell")
+winUtils.getScrSize()
+local maxX, maxY
+maxX, maxY = term.getSize()
 
---"edit" button
-paintutils.drawLine(7, 18, 11, 18, colors.green)
-term.setCursorPos(7, 18)
-term.setTextColor(colors.white)
-term.write("edit")
-
---"list" button
-paintutils.drawLine(13, 18, 16, 18, colors.green)
-term.setCursorPos(13, 18)
-term.setTextColor(colors.white)
-term.write("list")
-
---"paint" button
-paintutils.drawLine(18, 18, 22, 18, colors.green)
-term.setCursorPos(18, 18)
-term.setTextColor(colors.white)
-term.write("paint")
-
---"fm" button
-paintutils.drawLine(24, 18, 25, 18, colors.green)
-term.setCursorPos(24, 18)
-term.setTextColor(colors.white)
-term.write("FM")
-
---Wait for click
-stdio.waitForClick()
-local ClickX = stdio.ioReturn("ClickX")
-local ClickY = stdio.ioReturn("ClickY")
-
---Run button code
-  --Run button code
-  if ((ClickX >= 1 and ClickX <= 5) and (ClickY == 18)) then
-    --"shell" button 
-	shell.switchTab(shell.openTab("/sysConfig/shell.cfg"))
-	redraw1pxUp()
-	
-    elseif ((ClickX == 51) and (ClickY == 1)) then
-    --"shutdown" button
-    winUtils.updateWinPart("TopPanel", colors.red, "Goodbye", colors.white)
-    sleep(1)
-    os.shutdown()  
-	
-  elseif ((ClickX == 50) and (ClickY == 1)) then
-    --"reboot" button
-    winUtils.updateWinPart("TopPanel", colors.green, "Goodbye", colors.white)
-    sleep(1)
-    os.reboot()
-	
-  elseif ((ClickX >= 7) and (ClickX <= 11) and (ClickY == 18)) then
-    --"edit" button
-    shell.switchTab(shell.openTab("/sysConfig/edit.cfg"))
-	redraw1pxUp()
-	
-  elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == 18)) then
-    --"list" button
-    shell.switchTab(shell.openTab("/sysConfig/list.cfg"))
-	redraw1pxUp()
-     
-  elseif ((ClickX >= 18) and (ClickX <= 22) and (ClickY == 18)) then
-  --"paint" button
-    shell.switchTab(shell.openTab("/sysConfig/paint.cfg"))
-	redraw1pxUp()
-  elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == 18)) then
-    --"fm" button
-    shell.run("/sysUtils/FM")
-	buttons()
-  end
-  
-  end
-
-function buttons()
 --Draw buttons
 --"shell" button
-paintutils.drawLine(1, 19, 5, 19, colors.green)
-term.setCursorPos(1, 19)
+paintutils.drawLine(1, maxY, 5, maxY, colors.green)
+term.setCursorPos(1, maxY)
 term.setTextColor(colors.white)
 term.write("shell")
 
 --"shutdown" button
-paintutils.drawPixel(51, 1, colors.red)
-term.setCursorPos(51, 1)
+paintutils.drawPixel(maxX, 1, colors.red)
+term.setCursorPos(maxX, 1)
 term.setTextColor(colors.white)
 term.write("S")
 
 --"reboot" button
-paintutils.drawPixel(50, 1, colors.green)
-term.setCursorPos(50, 1)
+paintutils.drawPixel(maxX-1, 1, colors.green)
+term.setCursorPos(maxX-1, 1)
 term.setTextColor(colors.white)
 term.write("R")
 
 --"edit" button
-paintutils.drawLine(7, 19, 11, 19, colors.green)
-term.setCursorPos(7, 19)
+paintutils.drawLine(7, maxY, 11, maxY, colors.green)
+term.setCursorPos(7, maxY)
 term.setTextColor(colors.white)
 term.write("edit")
 
 --"list" button
-paintutils.drawLine(13, 19, 16, 19, colors.green)
-term.setCursorPos(13, 19)
+paintutils.drawLine(13, maxY, 16, maxY, colors.green)
+term.setCursorPos(13, maxY)
 term.setTextColor(colors.white)
 term.write("list")
 
 --"paint" button
-paintutils.drawLine(18, 19, 22, 19, colors.green)
-term.setCursorPos(18, 19)
+paintutils.drawLine(18, maxY, 22, maxY, colors.green)
+term.setCursorPos(18, maxY)
 term.setTextColor(colors.white)
 term.write("paint")
 
 --"fm" button
-paintutils.drawLine(24, 19, 25, 19, colors.green)
-term.setCursorPos(24, 19)
+paintutils.drawLine(24, maxY, 25, maxY, colors.green)
+term.setCursorPos(24, maxY)
 term.setTextColor(colors.white)
 term.write("FM")
 
 --Debug buttons
 if debug == true then
 --"dev" button
-paintutils.drawPixel(51, 2, colors.orange)
-term.setCursorPos(51, 2)
+paintutils.drawPixel(maxX, 2, colors.orange)
+term.setCursorPos(maxX, 2)
 term.setTextColor(colors.black)
 term.write("D")
 
 --"redraw" button
-paintutils.drawPixel(50, 2, colors.yellow)
-term.setCursorPos(50, 2)
+paintutils.drawPixel(maxX-1, 2, colors.yellow)
+term.setCursorPos(maxX-1, 2)
 term.setTextColor(colors.black)
 term.write("R")
 
 --"run" button
-paintutils.drawLine(45, 1, 48, 1, colors.blue)
-term.setCursorPos(45, 1)
+paintutils.drawLine(maxX-6, 1, maxX-3, 1, colors.blue)
+term.setCursorPos(maxX-6, 1)
 term.setTextColor(colors.white)
 term.write("RUN>")
 
 --"lua" button
-paintutils.drawLine(45, 2, 48, 2, colors.orange)
-term.setCursorPos(45, 2)
+paintutils.drawLine(maxX-6, 2, maxX-3, 2, colors.orange)
+term.setCursorPos(maxX-6, 2)
 term.setTextColor(colors.black)
 term.write("LUA>")
 
@@ -174,57 +98,94 @@ stdio.waitForClick()
 local ClickX = stdio.ioReturn("ClickX")
 local ClickY = stdio.ioReturn("ClickY")
 
+
 --Run button code
-  if ((ClickX >= 1 and ClickX <= 5) and (ClickY == 19)) then
-    --"shell" button 
-	shell.switchTab(shell.openTab("/sysConfig/shell.cfg"))
-	redraw1pxUp()
-	
-    elseif ((ClickX == 51) and (ClickY == 1)) then
+  if ((ClickX >= 1 and ClickX <= 5) and (ClickY == maxY)) then
+    --"shell" button
+    winUtils.clearAll()
+    term.setTextColor(colors.cyan)
+    print("Run [exit] if you want to return to the GUI")
+    shell.run("cd /home")
+    print("Files in home dir:")
+    shell.run("ls /home")
+    term.setTextColor(colors.white)
+    shell.run("shell")
+  elseif ((ClickX == maxX) and (ClickY == 1)) then
     --"shutdown" button
     winUtils.updateWinPart("TopPanel", colors.red, "Goodbye", colors.white)
     sleep(1)
     os.shutdown()  
-	
-  elseif ((ClickX == 50) and (ClickY == 1)) then
+  elseif ((ClickX == maxX-1) and (ClickY == 1)) then
     --"reboot" button
     winUtils.updateWinPart("TopPanel", colors.green, "Goodbye", colors.white)
     sleep(1)
     os.reboot()
-	
-  elseif ((ClickX >= 7) and (ClickX <= 11) and (ClickY == 19)) then
+  elseif ((ClickX >= 7) and (ClickX <= 11) and (ClickY == maxY)) then
     --"edit" button
-    shell.switchTab(shell.openTab("/sysConfig/edit.cfg"))
-	redraw1pxUp()
-	
-  elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == 19)) then
+    winUtils.updateWinPart("BottomPanel", colors.blue, "(q = cancel): ", colors.white)
+    term.setBackgroundColor(colors.blue)
+    local filename = read()
+    term.setBackgroundColor(colors.black)
+    winUtils.clearAll()
+    if filename == "q" then
+      shell.run("/sysUtils/OS/StartScreen")
+    else
+      shell.run("edit "..filename)
+      shell.run("/sysUtils/OS/StartScreen")
+    end 
+  elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == maxY)) then
     --"list" button
-    shell.switchTab(shell.openTab("/sysConfig/list.cfg"))
-	redraw1pxUp()
-     
-  elseif ((ClickX >= 18) and (ClickX <= 22) and (ClickY == 19)) then
+    winUtils.updateWinPart("BottomPanel", colors.blue, "(q = cancel, empty = /home): ", colors.white)
+    term.setBackgroundColor(colors.blue)
+    local dirname = read()
+    term.setBackgroundColor(colors.black)
+    winUtils.clearAll()
+    if dirname == "q" then
+      shell.run("/sysUtils/OS/StartScreen")
+    elseif dirname == "" then
+      shell.run("ls /home")
+      print("Press any key to continue")
+      stdio.waitForKey()
+      shell.run("/sysUtils/OS/StartScreen")
+    else
+      shell.run("ls "..dirname)
+      print("Press any key to continue")
+      stdio.waitForKey()
+      shell.run("/sysUtils/OS/StartScreen")
+    end
+  elseif ((ClickX >= 18) and (ClickX <= 22) and (ClickY == maxY)) then
   --"paint" button
-    shell.switchTab(shell.openTab("/sysConfig/paint.cfg"))
-	redraw1pxUp()
-  elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == 19)) then
+    winUtils.updateWinPart("BottomPanel", colors.blue, "(q = cancel): ", colors.white)
+    term.setBackgroundColor(colors.blue)
+    local filename = read()
+    term.setBackgroundColor(colors.black)
+    if filename == "q" then
+      sleep(0)
+    else
+      winUtils.clearAll()
+      shell.run("paint "..filename)
+    end
+  elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == maxY)) then
     --"fm" button
     shell.run("/sysUtils/FM")
   end
 
+
+
 --Debug buttons
 if debug == true then
-  if ((ClickX == 51) and (ClickY == 2)) then
+  if ((ClickX == maxX) and (ClickY == 2)) then
     --"dev" button
-     
+    winUtils.clearAll()
     shell.run("edit /help")
     shell.run("/sysUtils/OS/StartScreen")
-  elseif ((ClickX == 50) and (ClickY == 2)) then
+  elseif ((ClickX == maxX-1) and (ClickY == 2)) then
     --"redraw" button
     sleep(0)
   elseif ((ClickX >= 1) and (ClickX <= 4) and (ClickY == 2)) then
     --"ide" button
     shell.run("/sysUtils/luaide")
-  elseif ((ClickX >= 45) and (ClickX <= 48) and (ClickY == 1)) then
+  elseif ((ClickX >= maxX-6) and (ClickX <= maxX-3) and (ClickY == 1)) then
     --"run" button
     winUtils.updateWinPart("TopPanel", colors.blue, "(q = cancel) > ", colors.white)
     term.setBackgroundColor(colors.blue)
@@ -239,8 +200,8 @@ if debug == true then
       print("Press any key to continue")
       os.pullEvent("key")
     end
-  elseif ((ClickX >= 45) and (ClickX <= 48) and (ClickY == 2)) then
-     
+  elseif ((ClickX >= maxX-6) and (ClickX <= maxX-3) and (ClickY == 2)) then
+    winUtils.clearAll()
     shell.run("lua")
   elseif ((ClickX >= 6) and (ClickX <= 9) and (ClickY == 2)) then
     --"git" button
@@ -255,87 +216,9 @@ if debug == true then
       term.clear()
       term.setTextColor(colors.white)
       shell.run("/sysUtils/loadGit "..args)
-      print("GitHub repo downloader by max96at")
       print("Press any key to continue")
       os.pullEvent("key")
     end
   end
-  end
-  end
-  
- function redraw1pxUp()
-paintutils.drawLine(1,18,52,18,colors.cyan)
---"shell" button
-paintutils.drawLine(1, 18, 5, 18, colors.green)
-term.setCursorPos(1, 18)
-term.setTextColor(colors.white)
-term.write("shell")
+end
 
---"edit" button
-paintutils.drawLine(7, 18, 11, 18, colors.green)
-term.setCursorPos(7, 18)
-term.setTextColor(colors.white)
-term.write("edit")
-
---"list" button
-paintutils.drawLine(13, 18, 16, 18, colors.green)
-term.setCursorPos(13, 18)
-term.setTextColor(colors.white)
-term.write("list")
-
---"paint" button
-paintutils.drawLine(18, 18, 22, 18, colors.green)
-term.setCursorPos(18, 18)
-term.setTextColor(colors.white)
-term.write("paint")
-
---"fm" button
-paintutils.drawLine(24, 18, 25, 18, colors.green)
-term.setCursorPos(24, 18)
-term.setTextColor(colors.white)
-term.write("FM")
-
---Wait for click
-stdio.waitForClick()
-local ClickX = stdio.ioReturn("ClickX")
-local ClickY = stdio.ioReturn("ClickY")
-
---Run button code
-  --Run button code
-  if ((ClickX >= 1 and ClickX <= 5) and (ClickY == 18)) then
-    --"shell" button 
-	shell.switchTab(shell.openTab("/sysConfig/shell.cfg"))
-	redraw1pxUp()
-	
-    elseif ((ClickX == 51) and (ClickY == 1)) then
-    --"shutdown" button
-    winUtils.updateWinPart("TopPanel", colors.red, "Goodbye", colors.white)
-    sleep(1)
-    os.shutdown()  
-	
-  elseif ((ClickX == 50) and (ClickY == 1)) then
-    --"reboot" button
-    winUtils.updateWinPart("TopPanel", colors.green, "Goodbye", colors.white)
-    sleep(1)
-    os.reboot()
-	
-  elseif ((ClickX >= 7) and (ClickX <= 11) and (ClickY == 18)) then
-    --"edit" button
-    shell.switchTab(shell.openTab("/sysConfig/edit.cfg"))
-	redraw1pxUp()
-	
-  elseif ((ClickX >= 13) and (ClickX <= 16) and (ClickY == 18)) then
-    --"list" button
-    shell.switchTab(shell.openTab("/sysConfig/list.cfg"))
-	redraw1pxUp()
-     
-  elseif ((ClickX >= 18) and (ClickX <= 22) and (ClickY == 18)) then
-  --"paint" button
-    shell.switchTab(shell.openTab("/sysConfig/paint.cfg"))
-	redraw1pxUp()
-  elseif ((ClickX >= 24) and (ClickX <= 25) and (ClickY == 18)) then
-    --"fm" button
-    shell.run("/sysUtils/FM")
-  end
-  end
-buttons()
