@@ -1,9 +1,9 @@
 local tArgs ={ ... }
 
-local pa = shell.resolve(tArgs[1])
-local path = fs.combine("/sysUtils/mans", pa)
 local curDir = shell.dir()
 shell.setDir("/")
+local pa = shell.resolve(tArgs[1])
+local path = fs.combine("/sysUtils/mans", pa)
 
 if fs.exists(path) then
     local wr = fs.open(path,"r")

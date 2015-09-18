@@ -1,7 +1,7 @@
 --TYPE: BOOTAPI
 local debug = nil
 local OSname = "baseOS" --Set OS name
-local OSversion = "0.3" --Set OS version
+local OSversion = "0.5" --Set OS version
 
 
 local function OS_ASK_DEBUG()

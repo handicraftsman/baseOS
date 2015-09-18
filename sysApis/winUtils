@@ -6,21 +6,28 @@ if OSdebug == true then
 end
 
 local winCreated = 0
+local maxX, maxY
+
+function getScrSize()
+  maxX, maxY = term.getSize()
+end
+
+getScrSize()
 
 function createWin(windowColor, topPanelColor, topText, topTextColor, bottomPanelColor, bottomText, bottomTextColor)
   if(winCreated == 0) then
-    Window = window.create(term.current(),1,2,51,17,true)
+    Window = window.create(term.current(),1,2,maxX,maxY-1,true)
     Window.setBackgroundColor(windowColor)
     Window.clear()
 
-    WindowTop = window.create(term.current(),1,1,51,1,true)
+    WindowTop = window.create(term.current(),1,1,maxX,1,true)
     WindowTop.setBackgroundColor(topPanelColor)
     WindowTop.clear()
     WindowTop.setCursorPos(1,1)
     WindowTop.setTextColor(topTextColor)
     WindowTop.write(topText)
 
-    WindowBottom = window.create(term.current(),1,19,51,19,true)
+    WindowBottom = window.create(term.current(),1,maxY,maxX,maxY,true)
     WindowBottom.setBackgroundColor(bottomPanelColor)
     WindowBottom.clear()
     WindowBottom.setCursorPos(1,1)
@@ -36,15 +43,15 @@ end
 
 function prepareWin()
   if(winCreated == 0) then
-    Window = window.create(term.current(),1,2,51,17,true)
+    Window = window.create(term.current(),1,2,maxX,maxY-1,true)
     Window.setBackgroundColor(colors.black)
     Window.clear()
 
-    WindowTop = window.create(term.current(),1,1,51,1,true)
+    WindowTop = window.create(term.current(),1,1,maxX,1,true)
     WindowTop.setBackgroundColor(colors.black)
     WindowTop.clear()
 
-    WindowBottom = window.create(term.current(),1,19,51,19,true)
+    WindowBottom = window.create(term.current(),1,maxY,maxX,maxY,true)
     WindowBottom.setBackgroundColor(colors.black)
   
     winCreated = 1
