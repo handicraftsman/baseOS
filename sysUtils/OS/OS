@@ -1,0 +1,3 @@
+--TYPE: OS
+shell.run("/sysUtils/OS/StartScreen/")
+

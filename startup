@@ -1,0 +1,4 @@
+term.clear()
+term.setCursorPos(1,1)
+print("startup: Starting /boot/init")
+shell.run("/boot/init")

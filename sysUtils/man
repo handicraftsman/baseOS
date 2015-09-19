@@ -1,0 +1,17 @@
+local tArgs ={ ... }
+
+local curDir = shell.dir()
+shell.setDir("/")
+local pa = shell.resolve(tArgs[1])
+local path = fs.combine("/sysUtils/mans", pa)
+
+if fs.exists(path) then
+    local wr = fs.open(path,"r")
+    term.clear()
+    term.setCursorPos(1,1)
+    textutils.pagedPrint(wr.readAll())
+ else
+  print("No manual for \""..path.."\"")
+ end
+shell.setDir(curDir)
+

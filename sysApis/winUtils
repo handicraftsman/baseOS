@@ -1,0 +1,153 @@
+--TYPE: API
+
+local OSdebug = base.OS_GET_DEBUG()
+if OSdebug == true then
+  print("Loading /sysApis/winUtils as API")
+end
+
+local winCreated = 0
+local maxX, maxY
+
+function getScrSize()
+  maxX, maxY = term.getSize()
+end
+
+getScrSize()
+
+function createWin(windowColor, topPanelColor, topText, topTextColor, bottomPanelColor, bottomText, bottomTextColor)
+  if(winCreated == 0) then
+    Window = window.create(term.current(),1,2,maxX,maxY-1,true)
+    Window.setBackgroundColor(windowColor)
+    Window.clear()
+
+    WindowTop = window.create(term.current(),1,1,maxX,1,true)
+    WindowTop.setBackgroundColor(topPanelColor)
+    WindowTop.clear()
+    WindowTop.setCursorPos(1,1)
+    WindowTop.setTextColor(topTextColor)
+    WindowTop.write(topText)
+
+    WindowBottom = window.create(term.current(),1,maxY,maxX,maxY,true)
+    WindowBottom.setBackgroundColor(bottomPanelColor)
+    WindowBottom.clear()
+    WindowBottom.setCursorPos(1,1)
+    WindowBottom.setTextColor(bottomTextColor)
+    WindowBottom.write(bottomText)
+  
+    winCreated = 1
+    term.setCursorPos(1,2)
+  else
+    error("Already")
+  end
+end
+
+function prepareWin()
+  if(winCreated == 0) then
+    Window = window.create(term.current(),1,2,maxX,maxY-1,true)
+    Window.setBackgroundColor(colors.black)
+    Window.clear()
+
+    WindowTop = window.create(term.current(),1,1,maxX,1,true)
+    WindowTop.setBackgroundColor(colors.black)
+    WindowTop.clear()
+
+    WindowBottom = window.create(term.current(),1,maxY,maxX,maxY,true)
+    WindowBottom.setBackgroundColor(colors.black)
+  
+    winCreated = 1
+    term.setCursorPos(1,2)
+  else
+    error("Already")
+  end
+end
+  
+function writeWinPart(part, text, textColor, x, y)
+  if winCreated == 1 then
+    if part == "Window" then
+      Window.setCursorPos(x, y)
+      Window.setTextColor(textColor)
+      Window.write(text)
+    else
+      if part == "TopPanel" then
+       WindowTop.setCursorPos(x, y)
+       WindowTop.setTextColor(textColor)
+       WindowTop.write(text)
+      else
+       if part == "BottomPanel" then
+         WindowBottom.setCursorPos(x, y)
+         WindowBottom.setTextColor(textColor)
+         WindowBottom.write(text)
+       else
+         error("Invalid part")
+       end
+      end
+    end
+  else
+    error("There's no windows")
+  end
+end
+
+function printWin(text, textColor)
+  if winCreated == 1 then
+    Window.setCursorPos(x, y)
+    Window.setTextColor(textColor)
+    Window.write(text)
+  else
+    error("There's no windows")
+  end
+end
+
+function setCurPos(x, y)
+  if winCreated == 1 then
+    Window.setCursorPos(x, y)
+  else
+    error("There's no windows")
+  end
+end
+
+function clearAll()
+  WindowTop = nil
+  Window = nil
+  WindowBottom = nil
+  term.setBackgroundColor(colors.black)
+  term.setTextColor(colors.white)
+  term.setCursorPos(1,1)
+  term.clear()
+  winCreated = 0
+end
+
+function updateWinPart(part, color, text, textColor)
+  if winCreated == 1 then
+    if part == "Window" then
+      Window.setBackgroundColor(color)
+      Window.clear()
+      Window.setCursorPos(1,1)
+      Window.setTextColor(textColor)
+      Window.write(text)
+    else
+      if part == "TopPanel" then
+        WindowTop.setBackgroundColor(color)
+        WindowTop.clear()
+        WindowTop.setCursorPos(1,1)
+        WindowTop.setTextColor(textColor)
+        WindowTop.write(text)
+      else
+        if part == "BottomPanel" then
+          WindowBottom.setBackgroundColor(color)
+          WindowBottom.clear()
+          WindowBottom.setCursorPos(1,1)
+          WindowBottom.setTextColor(textColor)
+          WindowBottom.write(text)
+        else
+          error("Invalid part")
+        end
+      end
+    end
+  else
+    error("There's no windows")
+  end
+end
+
+function winNil()
+  winCreated = 0
+end
