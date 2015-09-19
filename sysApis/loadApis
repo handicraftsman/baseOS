@@ -1,5 +1,0 @@
---TYPE: BOOTSCRIPT
-
-os.loadAPI("/sysApis/winUtils")
-os.loadAPI("/sysApis/stdio")
-os.loadAPI("/sysApis/configApi")
