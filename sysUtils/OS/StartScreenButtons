@@ -6,7 +6,17 @@ winUtils.getScrSize()
 local maxX, maxY
 maxX, maxY = term.getSize()
 
+local co = coroutine.create(function()
+if multishell.getCount()==1 then
+drawButtons()
+runButtonCode()
+end
+end)
+
+coroutine.resume(co)
+
 --Draw buttons
+function drawButtons()
 --"shell" button
 paintutils.drawLine(1, maxY, 5, maxY, colors.green)
 term.setCursorPos(1, maxY)
@@ -86,24 +96,24 @@ paintutils.drawLine(6, 2, 9, 2, colors.lightGray)
 term.setCursorPos(6, 2)
 term.setTextColor(colors.blue)
 term.write("????") --GIT>
-
 end
-
+end
+drawButtons()
 --Reset term settings
 term.setCursorPos(1,1)
 term.setTextColor(colors.white)
 term.setBackgroundColor(colors.black)
 
+function runButtonCode()
 --Wait for click
 stdio.waitForClick()
 local ClickX = stdio.ioReturn("ClickX")
 local ClickY = stdio.ioReturn("ClickY")
 
-
 --Run button code
   if ((ClickX >= 1 and ClickX <= 5) and (ClickY == maxY)) then
     --"shell" button
-    shell.switchTab(shell.openTab("shell"))
+	shell.switchTab(shell.openTab("shell"))
     winUtils.getScrSize()
   elseif ((ClickX == maxX) and (ClickY == 1)) then
     --"shutdown" button
@@ -163,9 +173,9 @@ local ClickY = stdio.ioReturn("ClickY")
     shell.switchTab(shell.openTab("/sysUtils/FM"))
     winUtils.getScrSize()
   end
-
-
-
+  end
+  
+runButtonCode()
 --Debug buttons
 if debug == true then
   if ((ClickX == maxX) and (ClickY == 2)) then
@@ -175,8 +185,8 @@ if debug == true then
     winUtils.getScrSize()
   elseif ((ClickX == maxX-1) and (ClickY == 2)) then
     --"redraw" button
-    sleep(0)
-    winUtils.getScrSize()
+	drawButtons()
+	
   elseif ((ClickX >= 1) and (ClickX <= 4) and (ClickY == 2)) then
     --"ide" button
     shell.switchTab(shell.openTab("/sysUtils/luaide"))
@@ -220,4 +230,3 @@ if debug == true then
     winUtils.getScrSize()
   end
 end
-
